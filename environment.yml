@@ -48,4 +48,3 @@ dependencies:
   - wincertstore=0.2=py38_0
   - yaml=0.2.5=he774522_0
   - zlib=1.2.11=h62dcd97_4
-prefix: C:\Users\Michael Spitzer\.conda\envs\imu-vis
