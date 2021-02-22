@@ -129,4 +129,4 @@ def update_output(value):
     return gyro_x_fig, gyro_y_fig, gyro_z_fig, acc_x_fig, acc_y_fig, acc_z_fig, fig_map
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False, host='0.0.0.0')
