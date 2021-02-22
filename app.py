@@ -8,10 +8,13 @@ import pandas as pd
 import json
 import datetime
 import os
+import flask
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = flask.Flask(__name__) # define flask app.server
+
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server=server)
 
 convert = lambda x: datetime.datetime.fromtimestamp(float(x) / 1e3)
 
@@ -22,13 +25,8 @@ for filename in os.listdir(getcwd() + '/data'):
     if filename.endswith(".csv"):
         df[str(filename)] = pd.read_csv(getcwd() + '/data/' + filename, sep=",", parse_dates=['timestamp'], date_parser=convert).drop(['measurement_id'], axis='columns')
         options.append({'value': str(filename), 'label': str(convert(filename.split(".")[0])).split('.')[0]})
-        continue
-    else:
-        continue
 
 first_file = list(df.keys())[0]
-
-label_mapping = {'1': 'GYRO_X','2': 'GYRO_Y', '3': 'GYRO_Z','4': 'ACC_X','5': 'ACC_Y', '6': 'ACC_Z'}
 
 convert = lambda x: datetime.datetime.fromtimestamp(float(x) / 1e3)
 
@@ -129,4 +127,4 @@ def update_output(value):
     return gyro_x_fig, gyro_y_fig, gyro_z_fig, acc_x_fig, acc_y_fig, acc_z_fig, fig_map
 
 if __name__ == '__main__':
-    app.run_server(debug=False, host='0.0.0.0')
+    app.run_server(debug=False)
