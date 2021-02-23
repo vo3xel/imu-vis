@@ -8,6 +8,7 @@ COPY environment.yml .
 RUN conda env create -f environment.yml
 SHELL ["conda", "run", "-n", "imu-vis", "/bin/bash", "-c"]
 
-WORKDIR /home/occ/data
+RUN mkdir -p /home/imu-vis/app
+WORKDIR /home/imu-vis/app
 COPY . .
-ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "imu-vis", "python", "app.py"]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "imu-vis", "gunicorn", "-w", "1", "-b", ":8000" "app:server"]

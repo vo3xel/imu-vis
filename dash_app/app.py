@@ -49,6 +49,15 @@ def create_map_figure(filename):
     fig_map.update_layout(mapbox_style="stamen-terrain", mapbox_zoom=15, mapbox_center_lat = df_map.loc[0,'lat'], mapbox_center_lon = df_map.loc[0,'lon'], margin={"r":0,"t":0,"l":0,"b":0})
     return fig_map
 
+def imu_sensor_div(signal_id):
+    return html.Div([
+        html.H1(children=sensorIdx[signal_id]),
+        html.Div(children='''
+            sensorIdx[signal_id] values with 20Hz
+        '''),
+        dcc.Graph(id='gyro_x'),  
+    ], className='row')
+
 app.layout = html.Div(children=[
     html.Div([
         html.H1(children='INSECTT IMU data visualizer'),
