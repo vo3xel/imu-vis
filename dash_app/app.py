@@ -53,9 +53,9 @@ def imu_sensor_div(signal_id):
     return html.Div([
         html.H1(children=sensorIdx[signal_id]),
         html.Div(children='''
-            sensorIdx[signal_id] values with 20Hz
-        '''),
-        dcc.Graph(id='gyro_x'),  
+            {sid} values with 20Hz
+        '''.format(sid=sensorIdx[signal_id])),
+        dcc.Graph(id=sensorIdx[signal_id]),  
     ], className='row')
 
 app.layout = html.Div(children=[
@@ -67,48 +67,12 @@ app.layout = html.Div(children=[
             value=first_file
         ),
     ], className='row'),
-    html.Div([
-        html.H1(children='GYRO_X'),
-        html.Div(children='''
-            GYRO_X values with 20Hz
-        '''),
-        dcc.Graph(id='gyro_x'),  
-    ], className='row'),
-    html.Div([
-        html.H1(children='GYRO_Y'),
-        html.Div(children='''
-            GYRO_Y values with 20Hz
-        '''),
-        dcc.Graph(id='gyro_y'),  
-    ], className='row'),
-    html.Div([
-        html.H1(children='GYRO_Z'),
-        html.Div(children='''
-            GYRO_Z values with 20Hz
-        '''),
-        dcc.Graph(id='gyro_z'),  
-    ], className='row'),        
-    html.Div([
-        html.H1(children='ACC_X'),
-        html.Div(children='''
-            ACC_X values with 20Hz
-        '''),
-        dcc.Graph(id='acc_x'),  
-    ], className='row'),
-    html.Div([
-        html.H1(children='ACC_Y'),
-        html.Div(children='''
-            ACC_Y values with 20Hz
-        '''),
-        dcc.Graph(id='acc_y'),    
-    ], className='row'),
-    html.Div([
-        html.H1(children='ACC_Z'),
-        html.Div(children='''
-            ACC_Z values with 20Hz
-        '''),
-        dcc.Graph(id='acc_z'),   
-    ], className='row'),        
+    imu_sensor_div(1),
+    imu_sensor_div(2),
+    imu_sensor_div(3),        
+    imu_sensor_div(4),
+    imu_sensor_div(5),
+    imu_sensor_div(6),        
     html.Div([
         html.H1(children='GPS'),
         html.Div(children='''
@@ -119,8 +83,8 @@ app.layout = html.Div(children=[
 ])
 
 @app.callback(
-    [dash.dependencies.Output('gyro_x', 'figure'), dash.dependencies.Output('gyro_y', 'figure'), dash.dependencies.Output('gyro_z', 'figure'), \
-    dash.dependencies.Output('acc_x', 'figure'), dash.dependencies.Output('acc_y', 'figure'), dash.dependencies.Output('acc_z', 'figure'), \
+    [dash.dependencies.Output(sensorIdx[1], 'figure'), dash.dependencies.Output(sensorIdx[2], 'figure'), dash.dependencies.Output(sensorIdx[3], 'figure'), \
+    dash.dependencies.Output(sensorIdx[4], 'figure'), dash.dependencies.Output(sensorIdx[5], 'figure'), dash.dependencies.Output(sensorIdx[6], 'figure'), \
     dash.dependencies.Output('gps_map', 'figure') ],
     [dash.dependencies.Input('csv-dropdown', 'value')])
 def update_output(value):
