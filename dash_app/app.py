@@ -12,7 +12,7 @@ import flask
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-server = flask.Flask(__name__) # define flask app.server
+server = flask.Flask(__name__)
 
 app = dash.Dash(__name__, external_stylesheets=[external_stylesheets], server=server)
 
@@ -26,7 +26,7 @@ tpl = 'plotly_dark'
 for filename in os.listdir(getcwd() + '/data'):
     if filename.endswith(".csv"):
         df[str(filename)] = pd.read_csv(getcwd() + '/data/' + filename, sep=",", parse_dates=['timestamp'], date_parser=convert).drop(['measurement_id'], axis='columns')
-        options.append({'value': str(filename), 'label': str(convert(filename.split(".")[0])).split('.')[0]})
+        options.append({'value': str(filename), 'label': "Trip: " + str(df[str(filename)]['timestamp'].values[0]).split(".")[0].replace("T", " ") + " - " + str(convert((filename.split("."))[0])).split(".")[0]})
 
 first_file = list(df.keys())[0]
 
