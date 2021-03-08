@@ -26,7 +26,6 @@ tpl = 'plotly_dark'
 sorted_list_dir = sorted(os.listdir(getcwd() + '/data'))
 for filename in sorted_list_dir:
     if filename.endswith(".csv"):
-        print(filename)
         df[str(filename)] = pd.read_csv(getcwd() + '/data/' + filename, sep=",", parse_dates=['timestamp'], date_parser=convert, dtype={"timestamp": int, "sensor_setup_id": int, "signal_value": float, "measurement_id": "string"}).drop(['measurement_id'], axis='columns')
         options.append({'value': str(filename), 'label': "Trip: " + str(df[str(filename)]['timestamp'].values[0]).split(".")[0].replace("T", " ") + " - " + str(convert((filename.split("."))[0])).split(".")[0]})
 
