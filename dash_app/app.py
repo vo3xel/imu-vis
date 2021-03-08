@@ -25,7 +25,7 @@ tpl = 'plotly_dark'
 
 for filename in os.listdir(getcwd() + '/data'):
     if filename.endswith(".csv"):
-        df[str(filename)] = pd.read_csv(getcwd() + '/data/' + filename, sep=",", parse_dates=['timestamp'], date_parser=convert).drop(['measurement_id'], axis='columns')
+        df[str(filename)] = pd.read_csv(getcwd() + '/data/' + filename, sep=",", parse_dates=['timestamp'], date_parser=convert, dtype={"timestamp": int, "sensor_setup_id": int, "signal_value": float, "measurement_id": "string"}).drop(['measurement_id'], axis='columns')
         options.append({'value': str(filename), 'label': "Trip: " + str(df[str(filename)]['timestamp'].values[0]).split(".")[0].replace("T", " ") + " - " + str(convert((filename.split("."))[0])).split(".")[0]})
 
 first_file = list(df.keys())[0]
